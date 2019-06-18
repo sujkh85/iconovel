@@ -1,0 +1,27 @@
+@external
+    def addLikeCnt(self, _id: int):
+        """Add Like Cnt When user clicks like button"""
+        self.likeCnt[_id] += 1
+
+    @external
+    def addReaderCnt(self, _id: int):
+        """Add Reader Cnt When user reads the """
+        self.readCnt[_id] += 1
+
+    @external(readonly=True)
+    def getLikeCntById(self, _id: int) -> int:
+        """Get like Cnt Count by ID"""
+        return self.likeCnt[_id]
+
+    @external(readonly=True)
+    def getReaderCntById(self, _id: int) -> int:
+        """Get Reader Cnt Count By ID"""
+        return self.readCnt[_id]
+
+    @external
+    def addWriting(self, msg: str):
+        self.writing.put(msg)
+
+    @external(readonly=True)
+    def getWriting(self) -> list:
+        return list(self.writing)

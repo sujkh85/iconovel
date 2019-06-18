@@ -1,0 +1,15 @@
+// [TODO- 명희] - eslint 설정다시해야됨
+{
+  "extends": "react-app",
+  "quotes": [
+    "error",
+    "single",
+    {
+      "avoidEscape": true,
+    }
+  ],
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }]
+  }
+
+}
