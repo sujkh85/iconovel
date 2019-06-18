@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import cn from 'classnames';
-import IconNovelDescription from './dAppSrc/IconNovelDescription';
-import IconNovelRead from './dAppSrc/IconNovelRead';
-import IconNovelWrite from './dAppSrc/IconNovelWrite';
-import IconNovelReadDetail from './dAppSrc/IconNovelReadDetail';
-import IconConnect from './dAppSrc/components/IconConnect';
-import IconSDK from './dAppSrc/components/icon-sdk';
-import { IconConverter } from 'icon-sdk-js';
+import React, { Component } from "react";
+import styled from "styled-components";
+import cn from "classnames";
+import IconNovelDescription from "./dAppSrc/IconNovelDescription";
+import IconNovelRead from "./dAppSrc/IconNovelRead";
+import IconNovelWrite from "./dAppSrc/IconNovelWrite";
+import IconNovelReadDetail from "./dAppSrc/IconNovelReadDetail";
+import IconConnect from "./dAppSrc/components/IconConnect";
+import IconSDK from "./dAppSrc/components/icon-sdk";
+import { IconConverter } from "icon-sdk-js";
 
 const AppWrraper = styled.div`
   font-family: Noto Sans, AppleGothic, sans-serif;
@@ -84,7 +84,7 @@ class App extends Component {
     if (this.props.location.query.tab) {
       state.selectMenu = this.props.location.query.tab;
     } else {
-      state.selectMenu = 'decription';
+      state.selectMenu = "decription";
     }
     this.state = state;
   }
@@ -92,33 +92,36 @@ class App extends Component {
     return {
       selectItem: {},
       textList: [],
-      address: '',
-      textObj: {},
+      address: "",
+      textObj: {}
     };
   };
   menuRegist = [
     {
-      key: 'decription',
-      label: '설명',
+      key: "decription",
+      label: "설명"
     },
     {
-      key: 'read',
-      label: '글보기',
+      key: "read",
+      label: "글보기"
     },
     {
-      key: 'write',
-      label: '글쓰기',
-    },
+      key: "write",
+      label: "글쓰기"
+    }
   ];
   onClickSelectMenu = e => {
-    let data = e.target.getAttribute('data');
-    this.props.history.push(`/?tab=${data}`);
+    let data = e.target.getAttribute("data");
+
+    this.props.history.push(`/${window.location.pathname}?tab=${data}`);
     this.setState({ selectMenu: data });
   };
 
   readDetailSelectMenu = item => {
-    this.props.history.push(`/?tab=readDetail&uuid=${item.uuid}`);
-    this.setState({ selectMenu: 'readDetail', selectItem: item });
+    this.props.history.push(
+      `/${window.location.pathname}?tab=readDetail&uuid=${item.uuid}`
+    );
+    this.setState({ selectMenu: "readDetail", selectItem: item });
   };
 
   menuRenerer = () => {
@@ -127,13 +130,13 @@ class App extends Component {
       let isOn = false;
       if (
         selectMenu === item.key ||
-        (selectMenu === 'readDetail' && item.key === 'read')
+        (selectMenu === "readDetail" && item.key === "read")
       ) {
         isOn = true;
       }
       return (
         <div
-          className={cn('menu-sell-item', { on: isOn })}
+          className={cn("menu-sell-item", { on: isOn })}
           data={item.key}
           onClick={this.onClickSelectMenu}
           key={index}
@@ -150,10 +153,10 @@ class App extends Component {
       const resList = await IconSDK.iconService
         .call(
           IconSDK.callBuild({
-            methodName: 'getWriting',
+            methodName: "getWriting",
             params: {},
-            to: window.CONTRACT_ADDRESS,
-          }),
+            to: window.CONTRACT_ADDRESS
+          })
         )
         .execute();
       //split
@@ -164,7 +167,7 @@ class App extends Component {
       });
       let textObj = {};
       let textList = [];
-      console.log('result', result);
+      console.log("result", result);
       //가공
       result.forEach((item, index) => {
         if (item[3]) {
@@ -173,7 +176,7 @@ class App extends Component {
             content: item[1],
             address: item[2],
             uuid: item[3],
-            index: index,
+            index: index
           };
           textObj[item[3]] = target;
           textList.push(target);
@@ -186,9 +189,9 @@ class App extends Component {
   contentRenderer = () => {
     const { selectMenu, selectItem, address, textList, textObj } = this.state;
     switch (selectMenu) {
-      case 'decription':
+      case "decription":
         return <IconNovelDescription {...this.props} address={address} />;
-      case 'read':
+      case "read":
         return (
           <IconNovelRead
             readDetailSelectMenu={this.readDetailSelectMenu}
@@ -198,7 +201,7 @@ class App extends Component {
             {...this.state}
           />
         );
-      case 'write':
+      case "write":
         return (
           <IconNovelWrite
             {...this.props}
@@ -206,7 +209,7 @@ class App extends Component {
             getTextList={this.getTextList}
           />
         );
-      case 'readDetail':
+      case "readDetail":
         return (
           <IconNovelReadDetail
             selectItem={selectItem}
@@ -226,20 +229,20 @@ class App extends Component {
       let address = await IconConnect.getAddress();
       this.setState(
         {
-          address: address,
+          address: address
         },
         () => {
           if (callback) {
             callback();
           }
-        },
+        }
       );
     } catch (error) {}
   };
 
   onClickLogin = () => {
     const { address } = this.state;
-    if (address === '') {
+    if (address === "") {
       this.connectAddress();
     }
   };
@@ -256,10 +259,10 @@ class App extends Component {
             <span className="icon">Icon</span>ovel
           </div>
           <div className="login" onClick={this.onClickLogin}>
-            {address !== '' ? address : 'login'}
+            {address !== "" ? address : "login"}
           </div>
         </div>
-        <div className="content" style={{ height: 'calc( 100vh - 64px )' }}>
+        <div className="content" style={{ height: "calc( 100vh - 64px )" }}>
           <div className="content-left">{this.menuRenerer()}</div>
           <div className="content-right">{this.contentRenderer()}</div>
         </div>
