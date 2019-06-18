@@ -1,7 +1,11 @@
 import IconService, { HttpProvider, IconBuilder } from "icon-sdk-js";
 
-// const provider = new HttpProvider('https://wallet.icon.foundation/api/v3')
-const provider = new HttpProvider("https://bicon.net.solidwallet.io/api/v3");
+let provider;
+if (process && process.env && process.env.NODE_ENV === "development") {
+  provider = new HttpProvider("https://bicon.net.solidwallet.io/api/v3");
+} else {
+  provider = new HttpProvider("https://wallet.icon.foundation/api/v3");
+}
 
 const iconService = new IconService(provider);
 

@@ -113,13 +113,13 @@ class App extends Component {
   onClickSelectMenu = e => {
     let data = e.target.getAttribute("data");
 
-    this.props.history.push(`/${window.location.pathname}?tab=${data}`);
+    this.props.history.push(`${window.location.pathname}?tab=${data}`);
     this.setState({ selectMenu: data });
   };
 
   readDetailSelectMenu = item => {
     this.props.history.push(
-      `/${window.location.pathname}?tab=readDetail&uuid=${item.uuid}`
+      `${window.location.pathname}?tab=readDetail&uuid=${item.uuid}`
     );
     this.setState({ selectMenu: "readDetail", selectItem: item });
   };
