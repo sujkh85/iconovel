@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import IconConnect from './components/IconConnect';
-import IconSDK from './components/icon-sdk';
-import { IconConverter } from 'icon-sdk-js';
+import React, { Component } from "react";
+import styled from "styled-components";
+import IconConnect from "./components/IconConnect";
+import IconSDK from "./components/icon-sdk";
+import { IconConverter } from "icon-sdk-js";
 
 const IconNovelReadWrapper = styled.div`
   .read-title {
@@ -30,6 +30,7 @@ const IconNovelReadWrapper = styled.div`
   tbody {
     cursor: pointer;
     tr {
+      text-align: center;
       &:hover {
         background: rgb(238, 238, 238);
         font-weight: bold;
@@ -46,7 +47,7 @@ class IconNovelRead extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
+      list: []
     };
   }
   onClickList = item => {
@@ -66,12 +67,16 @@ class IconNovelRead extends Component {
           <div className="read-list">
             <table>
               <colgroup>
-                <col style={{ width: '30%' }} />
-                <col style={{ width: '70%' }} />
+                <col style={{ width: "10%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "30%" }} />
+                <col style={{ width: "50%" }} />
               </colgroup>
               <thead>
                 <tr>
-                  <th>address</th>
+                  <th>index</th>
+                  <th>작성일</th>
+                  <th>지은이</th>
                   <th>제목</th>
                 </tr>
               </thead>
@@ -84,6 +89,8 @@ class IconNovelRead extends Component {
                         this.onClickList(item);
                       }}
                     >
+                      <td>{item.index}</td>
+                      <td>{item.date}</td>
                       <td>{item.address}</td>
                       <td>{item.title}</td>
                     </tr>

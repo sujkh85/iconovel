@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import QRcode from 'qrcode.react';
-import LoadingForComponent from './components/LoadingForComponent';
-import IconConnect from './components/IconConnect';
-import IconSDK from './components/icon-sdk';
-import { IconConverter } from 'icon-sdk-js';
+import React, { Component } from "react";
+import styled from "styled-components";
+import QRcode from "qrcode.react";
+import LoadingForComponent from "./components/LoadingForComponent";
+import IconConnect from "./components/IconConnect";
+import IconSDK from "./components/icon-sdk";
+import { IconConverter } from "icon-sdk-js";
 
 const IconNovelReadDetailWrapper = styled.div`
   .read-title-container {
@@ -75,7 +75,7 @@ class IconNovelReadDetail extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      recommend: 0,
+      recommend: 0
     };
   }
   isFirst = true;
@@ -87,16 +87,16 @@ class IconNovelReadDetail extends Component {
         const recommend = await IconSDK.iconService
           .call(
             IconSDK.callBuild({
-              methodName: 'getLikeCntById',
+              methodName: "getLikeCntById",
               params: {
-                _id: IconConverter.toHex(selectItem.index),
+                _id: IconConverter.toHex(selectItem.index)
               },
-              to: window.CONTRACT_ADDRESS,
-            }),
+              to: window.CONTRACT_ADDRESS
+            })
           )
           .execute();
         this.setState({
-          recommend: IconConverter.toNumber(recommend),
+          recommend: IconConverter.toNumber(recommend)
         });
       }
     } catch (error) {}
@@ -115,12 +115,12 @@ class IconNovelReadDetail extends Component {
       let address = this.props.address;
       if (address) {
         const txObj = IconSDK.sendTxBuild({
-          methodName: 'addLikeCnt',
+          methodName: "addLikeCnt",
           params: {
-            _id: IconConverter.toHex(selectItem.index),
+            _id: IconConverter.toHex(selectItem.index)
           },
           from: address,
-          to: window.CONTRACT_ADDRESS,
+          to: window.CONTRACT_ADDRESS
         });
         // from: address,
         const tx = await IconConnect.sendTransaction(txObj);
@@ -155,8 +155,12 @@ class IconNovelReadDetail extends Component {
         </div>
         <div className="title">제목 : {selectItem.title}</div>
         <div className="content">
-          {selectItem.content.split('\n').map((item, index) => {
-            return <div key={index}>{item}</div>;
+          {selectItem.content.split("\n").map((item, index) => {
+            return (
+              <div key={index} style={{ height: 20 }}>
+                {item}
+              </div>
+            );
           })}
         </div>
       </div>

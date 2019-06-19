@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import cn from "classnames";
+import moment from "moment";
 import IconNovelDescription from "./dAppSrc/IconNovelDescription";
 import IconNovelRead from "./dAppSrc/IconNovelRead";
 import IconNovelWrite from "./dAppSrc/IconNovelWrite";
@@ -8,6 +9,7 @@ import IconNovelReadDetail from "./dAppSrc/IconNovelReadDetail";
 import IconConnect from "./dAppSrc/components/IconConnect";
 import IconSDK from "./dAppSrc/components/icon-sdk";
 import { IconConverter } from "icon-sdk-js";
+import svg from "./asset/svg";
 
 const AppWrraper = styled.div`
   font-family: Noto Sans, AppleGothic, sans-serif;
@@ -26,6 +28,9 @@ const AppWrraper = styled.div`
     .login {
       cursor: pointer;
       font-size: 16px;
+    }
+    .icon {
+      padding-left: 15px;
     }
   }
   .content {
@@ -159,6 +164,7 @@ class App extends Component {
           })
         )
         .execute();
+      console.log("resList", resList);
       //split
       resList.forEach(item => {
         let converted = IconConverter.toUtf8(item);
@@ -170,18 +176,20 @@ class App extends Component {
       console.log("result", result);
       //가공
       result.forEach((item, index) => {
-        if (item[3]) {
+        if (item.length >= 5) {
           let target = {
             title: item[0],
             content: item[1],
             address: item[2],
             uuid: item[3],
+            date: moment(item[4] * 1).format("YYYY-MM-DD HH:mm:ss"),
             index: index
           };
           textObj[item[3]] = target;
           textList.push(target);
         }
       });
+      result.reverse();
       this.setState({ textList: textList, textObj });
     } catch (error) {}
   };
@@ -256,6 +264,7 @@ class App extends Component {
       <AppWrraper>
         <div className="gnb-title">
           <div>
+            {svg.getIcon("pen", 20)}
             <span className="icon">Icon</span>ovel
           </div>
           <div className="login" onClick={this.onClickLogin}>

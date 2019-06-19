@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import uuid from 'uuid/v1';
-import BasicInput from './components/Input';
-import IconConnect from './components/IconConnect';
-import IconSDK from './components/icon-sdk';
-import { IconConverter } from 'icon-sdk-js';
+import React, { Component } from "react";
+import styled from "styled-components";
+import uuid from "uuid/v1";
+import moment from "moment";
+import BasicInput from "./components/Input";
+import IconConnect from "./components/IconConnect";
+import IconSDK from "./components/icon-sdk";
+import { IconConverter } from "icon-sdk-js";
 
 const IconNovelWriteWrraper = styled.div`
   .write-title-container {
@@ -57,7 +58,7 @@ const IconNovelWriteWrraper = styled.div`
       color: black;
     }
     &:after {
-      content: '';
+      content: "";
       background: white;
       display: block;
       position: absolute;
@@ -81,8 +82,8 @@ class IconNovelWrite extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      content: '',
+      title: "",
+      content: ""
     };
   }
   onChangeTitle = e => {
@@ -91,20 +92,20 @@ class IconNovelWrite extends Component {
   onKeyDownTitle = e => {};
   onChangeContent = e => {
     this.setState({
-      content: e.target.value,
+      content: e.target.value
     });
   };
   writeValidate = () => {
     const { address } = this.props;
     const { title, content } = this.state;
-    if (address === '') {
-      alert('로그인이 필요합니다.');
+    if (address === "") {
+      alert("로그인이 필요합니다.");
       return false;
-    } else if (title === '') {
-      alert('제목을 입력해주세요');
+    } else if (title === "") {
+      alert("제목을 입력해주세요");
       return false;
-    } else if (content === '') {
-      alert('내용을 입력해주세요');
+    } else if (content === "") {
+      alert("내용을 입력해주세요");
       return false;
     }
     return true;
@@ -121,27 +122,29 @@ class IconNovelWrite extends Component {
 
       let msg = `${title}${window.SPLITER}${content}${
         window.SPLITER
-      }${address}${window.SPLITER}${uuid()}`;
-      console.log('msg', msg);
-      console.log('IconConverter.fromUtf8(msg)', IconConverter.fromUtf8(msg));
+      }${address}${window.SPLITER}${uuid()}${window.SPLITER}${moment().format(
+        "x"
+      )}`;
+      console.log("msg", msg);
+      console.log("IconConverter.fromUtf8(msg)", IconConverter.fromUtf8(msg));
       const txObj = sendTxBuild({
-        methodName: 'addWriting',
+        methodName: "addWriting",
         params: {
-          msg: IconConverter.fromUtf8(msg),
+          msg: IconConverter.fromUtf8(msg)
         },
         from: address,
-        to: window.CONTRACT_ADDRESS,
+        to: window.CONTRACT_ADDRESS
       });
 
-      console.log('txObj', txObj);
+      console.log("txObj", txObj);
       // from: address,
       const tx = await IconConnect.sendTransaction(txObj);
-      console.log('tx', tx);
+      console.log("tx", tx);
       window.open(`https://tracker.icon.foundation/transaction/${tx}`);
 
       this.setState({
-        title: '',
-        content: '',
+        title: "",
+        content: ""
       });
     } catch (error) {}
   };
@@ -151,7 +154,7 @@ class IconNovelWrite extends Component {
       <IconNovelWriteWrraper>
         <div className="write-title-container">
           <BasicInput
-            label={'Title'}
+            label={"Title"}
             inputName="write-title"
             onChangeText={this.onChangeTitle}
             onKeyDown={this.onKeyDownTitle}
