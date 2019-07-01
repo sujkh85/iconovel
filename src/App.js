@@ -94,10 +94,14 @@ class App extends Component {
     this.state = state;
   }
   initState = () => {
+    let address = localStorage.getItem("address");
+    if (!address) {
+      address = "";
+    }
     return {
       selectItem: {},
       textList: [],
-      address: "",
+      address: address,
       textObj: {}
     };
   };
@@ -235,6 +239,7 @@ class App extends Component {
   connectAddress = async callback => {
     try {
       let address = await IconConnect.getAddress();
+      window.localStorage.setItem("address", address);
       this.setState(
         {
           address: address
@@ -258,6 +263,12 @@ class App extends Component {
   componentDidMount() {
     this.getTextList();
   }
+  onClickLogout = () => {
+    window.localStorage.setItem("address", "");
+    this.setState({
+      address: ""
+    });
+  };
   render() {
     const { selectMenu, address } = this.state;
     return (
@@ -269,6 +280,9 @@ class App extends Component {
           </div>
           <div className="login" onClick={this.onClickLogin}>
             {address !== "" ? address : "login"}
+            {address !== "" ? (
+              <span onClick={this.onClickLogout}>(logout)</span>
+            ) : null}
           </div>
         </div>
         <div className="content" style={{ height: "calc( 100vh - 64px )" }}>
