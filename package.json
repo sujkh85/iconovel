@@ -10,7 +10,7 @@
     "custom-event-polyfill": "^1.0.7",
     "eslint-config-prettier": "^5.0.0",
     "icon-sdk-js": "0.0.16",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "qrcode.react": "^0.9.3",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
